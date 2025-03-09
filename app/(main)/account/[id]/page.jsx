@@ -1,5 +1,8 @@
 import { getAccountWithTransactions } from "@/actions/account";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import Transctiontable from "./_components/transction-table";
+import { BarLoader } from "react-spinners";
 
 export default async function AccountPage({ params }) {
   const accountData = await getAccountWithTransactions(params.id);
@@ -7,7 +10,6 @@ export default async function AccountPage({ params }) {
   if (!accountData) {
     notFound();
   }
-
   const { transactions, ...account } = accountData;
 
   return (
@@ -32,6 +34,11 @@ export default async function AccountPage({ params }) {
           </p>
         </div>
       </div>
+      <Suspense
+        fallback={<BarLoader className="mt-4" width={"100%"} color="#9333ea" />}
+      >
+        <Transctiontable transctions={transactions} />
+      </Suspense>
     </div>
   );
 }
