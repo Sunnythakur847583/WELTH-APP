@@ -1,11 +1,19 @@
-/** @type {import('postcss-load-config').Config} */
-const config = {
-  plugins: {
-    tailwindcss: {},
-  },
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
-    domains: ["randomuser.me"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "randomuser.me",
+      },
+    ],
+  },
+
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "5mb",
+    },
   },
 };
 
-export default config;
+export default nextConfig;
